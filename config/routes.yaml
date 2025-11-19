@@ -1,0 +1,18 @@
+controllers:
+    resource:
+        path: ../src/Controller/
+        namespace: App\Controller
+    type: attribute
+password_forgot:
+    path: /api/password/forgot
+    controller: App\Controller\PasswordResetController::forgot
+    methods: [POST]
+
+password_reset:
+    path: /api/password/reset
+    controller: App\Controller\PasswordResetController::reset
+    methods: [POST]
+api_email_verify:
+    path: /api/email/verify/{token}
+    controller: App\Controller\EmailVerificationController::verify
+    methods: [GET]

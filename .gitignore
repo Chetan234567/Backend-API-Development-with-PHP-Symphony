@@ -1,0 +1,30 @@
+# Symfony directories
+/var/
+/vendor/
+
+# Node / Frontend
+/node_modules/
+/public/build/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Log files
+*.log
+
+# Cache
+/cache/
+.phpunit.result.cache
+
+# IDE files
+.vscode/
+.idea/
+*.iml
+
+# OS files
+.DS_Store
+
+# Composer lock in libraries
+composer.lock
