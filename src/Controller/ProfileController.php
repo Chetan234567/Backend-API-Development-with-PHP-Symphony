@@ -17,4 +17,25 @@ class ProfileController extends AbstractController
             'username' => $user->getUsername()
         ]);
     }
+
+     #[Route('/api/profile', name: 'delete_profile', methods: ['DELETE'])]
+    public function deleteProfile(): JsonResponse
+    {
+        $user = $this->getUser();
+
+        if (!$user) {
+            return new JsonResponse([
+                'success' => false,
+                'message' => 'Authentication required.'
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+
+        $this->entityManager->remove($user);
+        $this->entityManager->flush();
+
+        return new JsonResponse([
+            'success' => true,
+            'message' => 'Account deleted successfully. Token is no longer valid.'
+        ], Response::HTTP_OK);
+    }
 }

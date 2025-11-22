@@ -78,7 +78,7 @@ class PasswordResetToken
     }
 
     public function isExpired(): bool
-    {
-        return $this->expiresAt < new \DateTimeImmutable();
-    }
+{
+    return $this->expiresAt->getTimestamp() < time();
+}
 }

@@ -46,8 +46,11 @@ class RegisterController extends AbstractController
         $em->flush();
 
 // Build verification link (adjust host/port as needed)
-$verificationUrl = sprintf('http://localhost:8000/api/email/verify/%s', ed9d858ee4fcb90e9389b4544a496a9b0304029eee1aea860532f11fe54032a6, $user->getVerificationToken()
+$verificationUrl = sprintf(
+    'http://localhost:8000/api/email/verify/%s',
+    $user->getVerificationToken()
 );
+
 $messageBody = "Click to verify your email: " . $verificationUrl;
 
         return new JsonResponse(['message' => 'User registered successfully'], 201);

@@ -161,6 +161,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->profilePicture;
     }
+    public function getAvatarPath(): ?string
+{
+    return $this->profilePicture;
+}
 
     public function setProfilePicture(?string $profilePicture): static
     {
