@@ -26,7 +26,7 @@ A modern, scalable backend API built using Symfony 6+, following clean architect
 
 ## 1. Clone the project
 ```
-git clone https://github.com/Chukkaluru-Pravallika/Backend-API-Development-with-PHP-Symphony.git
+git clone https://github.com/Chetan234567/Backend-API-Development-with-PHP-Symphony.git
 cd Backend-API-Development-with-PHP-Symphony
 ```
 
