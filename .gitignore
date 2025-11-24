@@ -26,5 +26,4 @@
 # OS files
 .DS_Store
 
-# Composer lock in libraries
-composer.lock
+
