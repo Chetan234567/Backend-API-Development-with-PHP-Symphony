@@ -19,7 +19,7 @@ COPY . .
 RUN composer install --no-dev --optimize-autoloader
 
 # Remove default Nginx site and add ours
-RUN rm /etc/nginx/conf.d/default.conf
+RUN rm /etc/nginx/sites-enabled/default
 COPY docker/nginx/default.conf /etc/nginx/conf.d/default.conf
 
 # Permissions (important for Symfony)
