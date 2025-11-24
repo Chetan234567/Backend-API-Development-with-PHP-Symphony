@@ -3,12 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Follow;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-/**
- * @extends ServiceEntityRepository<Follow>
- */
 class FollowRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
@@ -16,28 +14,36 @@ class FollowRepository extends ServiceEntityRepository
         parent::__construct($registry, Follow::class);
     }
 
-    //    /**
-    //     * @return Follow[] Returns an array of Follow objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('f')
-    //            ->andWhere('f.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('f.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function findFollowers(User $user)
+    {
+        return $this->createQueryBuilder('f')
+            ->where('f.following = :user')
+            ->setParameter('user', $user)
+            ->orderBy('f.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 
-    //    public function findOneBySomeField($value): ?Follow
-    //    {
-    //        return $this->createQueryBuilder('f')
-    //            ->andWhere('f.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function findFollowing(User $user)
+    {
+        return $this->createQueryBuilder('f')
+            ->where('f.follower = :user')
+            ->setParameter('user', $user)
+            ->orderBy('f.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function isFollowing(User $follower, User $following): bool
+    {
+        $result = $this->createQueryBuilder('f')
+            ->where('f.follower = :follower')
+            ->andWhere('f.following = :following')
+            ->setParameter('follower', $follower)
+            ->setParameter('following', $following)
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        return $result !== null;
+    }
 }

@@ -1,6 +1,7 @@
 # config/services.yaml
 parameters:
-
+   profile_picture_dir: '%kernel.project_dir%/public/uploads/profile'
+   profile_picture_base_url: '/uploads/profile'
 services:
     # default configuration for services in *this* file
     _defaults:

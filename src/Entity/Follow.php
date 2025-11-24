@@ -6,6 +6,9 @@ use App\Repository\FollowRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: FollowRepository::class)]
+#[ORM\Table(name: 'follow', uniqueConstraints: [
+    new ORM\UniqueConstraint(name: 'unique_follow', columns: ['follower_id', 'following_id'])
+])]
 class Follow
 {
     #[ORM\Id]
@@ -13,11 +16,13 @@ class Follow
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $follower = null;
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(name: 'follower_id', nullable: false)]
+    private ?User $follower = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $following = null;
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(name: 'following_id', nullable: false)]
+    private ?User $following = null;
 
     #[ORM\Column]
     private ?\DateTime $createdAt = null;
@@ -27,27 +32,25 @@ class Follow
         return $this->id;
     }
 
-    public function getFollower(): ?string
+    public function getFollower(): ?User
     {
         return $this->follower;
     }
 
-    public function setFollower(string $follower): static
+    public function setFollower(?User $follower): self
     {
         $this->follower = $follower;
-
         return $this;
     }
 
-    public function getFollowing(): ?string
+    public function getFollowing(): ?User
     {
         return $this->following;
     }
 
-    public function setFollowing(string $following): static
+    public function setFollowing(?User $following): self
     {
         $this->following = $following;
-
         return $this;
     }
 
@@ -56,10 +59,9 @@ class Follow
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTime $createdAt): static
+    public function setCreatedAt(\DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
-
         return $this;
     }
 }
