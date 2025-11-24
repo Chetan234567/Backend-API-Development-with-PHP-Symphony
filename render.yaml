@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: symfony-backend
+    env: docker
+    plan: free
+    region: oregon
+    dockerfilePath: ./Dockerfile
+    buildCommand: "./.render-build.sh"
+    autoDeploy: true
+    envVars:
+      - key: APP_ENV
+        value: prod
+      - key: APP_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase: symfony-mysql
+
+databases:
+  - name: symfony-mysql
+    plan: free
+    engine: mysql
+    version: 8.0
