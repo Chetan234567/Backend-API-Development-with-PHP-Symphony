@@ -18,15 +18,11 @@ COPY . .
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Remove default Nginx site and add ours
-RUN rm /etc/nginx/sites-enabled/default
-COPY docker/nginx/default.conf /etc/nginx/conf.d/default.conf
-
 # Permissions (important for Symfony)
 RUN chown -R www-data:www-data var
 
 # Expose Railway dynamic PORT
-EXPOSE 8080
+EXPOSE ${PORT}
 
 # Start Nginx with runtime port replacement + PHP-FPM
-CMD sh -c "php-fpm -D && sed -i \"s/listen 80;/listen ${PORT};/\" /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+CMD ["php", "-S", "0.0.0.0:${PORT}", "-t", "public"]
