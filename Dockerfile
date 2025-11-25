@@ -25,8 +25,8 @@ COPY docker/nginx/default.conf /etc/nginx/conf.d/default.conf
 # Permissions (important for Symfony)
 RUN chown -R www-data:www-data var
 
-# Expose required port
-EXPOSE 8080
+# Expose Railway dynamic PORT
+EXPOSE ${PORT}
 
-# Start Nginx + PHP-FPM correctly
-CMD ["sh", "-c", "php-fpm -D && nginx -g 'daemon off;'"]
+# Start Nginx with runtime port replacement + PHP-FPM
+CMD sh -c "php-fpm -D && sed -i \"s/listen 80;/listen ${PORT};/\" /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
