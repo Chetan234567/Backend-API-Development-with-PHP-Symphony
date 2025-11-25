@@ -25,4 +25,4 @@ RUN chown -R www-data:www-data var
 EXPOSE ${PORT}
 
 # Start Nginx with runtime port replacement + PHP-FPM
-CMD ["php", "-S", "0.0.0.0:${PORT}", "-t", "public"]
+CMD ["php", "-S", "0.0.0.0:8000", "-t", "public"]
