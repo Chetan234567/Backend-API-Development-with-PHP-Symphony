@@ -26,7 +26,7 @@ COPY docker/nginx/default.conf /etc/nginx/conf.d/default.conf
 RUN chown -R www-data:www-data var
 
 # Expose required port
-EXPOSE 80
+EXPOSE 8080
 
 # Start Nginx + PHP-FPM correctly
 CMD ["sh", "-c", "php-fpm -D && nginx -g 'daemon off;'"]
