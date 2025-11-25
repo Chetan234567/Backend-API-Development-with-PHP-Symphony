@@ -26,7 +26,7 @@ COPY docker/nginx/default.conf /etc/nginx/conf.d/default.conf
 RUN chown -R www-data:www-data var
 
 # Expose Railway dynamic PORT
-EXPOSE ${PORT}
+EXPOSE 8080
 
 # Start Nginx with runtime port replacement + PHP-FPM
 CMD sh -c "php-fpm -D && sed -i \"s/listen 80;/listen ${PORT};/\" /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
