@@ -1,28 +1,18 @@
-FROM php:8.2-fpm
+FROM php:8.2
 
-# Install system dependencies & MySQL support
+WORKDIR /app
+
 RUN apt-get update && apt-get install -y \
     git unzip libicu-dev libzip-dev libonig-dev \
-    nginx \
-    && docker-php-ext-install pdo pdo_mysql intl zip \
-    && docker-php-ext-enable opcache
+    && docker-php-ext-install pdo pdo_mysql intl zip
 
-# Install Composer
+# composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-WORKDIR /var/www/html
-
-# Copy project files
 COPY . .
 
-# Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Permissions (important for Symfony)
-RUN chown -R www-data:www-data var
+EXPOSE 8000
 
-# Expose Railway dynamic PORT
-EXPOSE ${PORT}
-
-# Start Nginx with runtime port replacement + PHP-FPM
-CMD ["php", "-S", "0.0.0.0:8000", "-t", "public"]
+CMD ["php", "-S", "0.0.0.0:${PORT}", "-t", "public"]
